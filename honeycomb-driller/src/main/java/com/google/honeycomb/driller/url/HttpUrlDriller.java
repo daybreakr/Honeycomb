@@ -1,6 +1,6 @@
 package com.google.honeycomb.driller.url;
 
-import com.google.honeycomb.common.log.HLog;
+import com.google.honeycomb.log.HLog;
 
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;

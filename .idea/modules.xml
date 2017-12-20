@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Honeycomb.iml" filepath="$PROJECT_DIR$/Honeycomb.iml" />
-      <module fileurl="file://$PROJECT_DIR$/honeycomb-common/honeycomb-common.iml" filepath="$PROJECT_DIR$/honeycomb-common/honeycomb-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/honeycomb-basement/honeycomb-common.iml" filepath="$PROJECT_DIR$/honeycomb-basement/honeycomb-common.iml" />
       <module fileurl="file://$PROJECT_DIR$/honeycomb-config/honeycomb-config.iml" filepath="$PROJECT_DIR$/honeycomb-config/honeycomb-config.iml" />
       <module fileurl="file://$PROJECT_DIR$/honeycomb-driller/honeycomb-driller.iml" filepath="$PROJECT_DIR$/honeycomb-driller/honeycomb-driller.iml" />
       <module fileurl="file://$PROJECT_DIR$/sample/sample.iml" filepath="$PROJECT_DIR$/sample/sample.iml" />

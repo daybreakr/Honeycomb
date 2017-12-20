@@ -65,7 +65,7 @@ subprojects {
     group 'com.honeycomb'
 
     // Common maven version for all projects
-    version '0.0.2'
+    version '0.0.3'
 }
 
 

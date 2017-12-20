@@ -4,8 +4,8 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.google.honeycomb.common.log.HLog;
-import com.google.honeycomb.common.util.AsyncResult;
+import com.google.honeycomb.log.HLog;
+import com.google.honeycomb.util.AsyncResult;
 import com.google.honeycomb.driller.url.HttpUrlDriller;
 import com.google.honeycomb.driller.url.IUrlDriller;
 import com.google.honeycomb.driller.url.WebViewUrlDriller;

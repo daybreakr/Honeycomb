@@ -1,4 +1,4 @@
-package com.google.honeycomb.common.log;
+package com.google.honeycomb.log;
 
 /**
  * Prepares the log message and delegates it to {@link ILogAdapter} attached to it.

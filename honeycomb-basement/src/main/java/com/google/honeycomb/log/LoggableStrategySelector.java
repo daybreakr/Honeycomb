@@ -1,4 +1,4 @@
-package com.google.honeycomb.common.log;
+package com.google.honeycomb.log;
 
 import java.util.ArrayList;
 import java.util.List;

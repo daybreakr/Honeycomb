@@ -1,4 +1,4 @@
-package com.google.honeycomb.common.log;
+package com.google.honeycomb.log;
 
 import android.util.Log;
 

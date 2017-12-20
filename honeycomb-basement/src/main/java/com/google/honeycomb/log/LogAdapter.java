@@ -1,4 +1,4 @@
-package com.google.honeycomb.common.log;
+package com.google.honeycomb.log;
 
 /**
  * Default implementation of {@link ILogAdapter}, just delegates loggable logic to

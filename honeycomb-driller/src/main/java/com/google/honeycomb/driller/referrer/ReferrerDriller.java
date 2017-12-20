@@ -2,8 +2,8 @@ package com.google.honeycomb.driller.referrer;
 
 import android.content.Context;
 
-import com.google.honeycomb.common.log.HLog;
-import com.google.honeycomb.common.util.StringUtils;
+import com.google.honeycomb.log.HLog;
+import com.google.honeycomb.util.StringUtils;
 import com.google.honeycomb.driller.url.IUrlDriller;
 
 import java.util.concurrent.atomic.AtomicBoolean;

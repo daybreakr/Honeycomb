@@ -1,4 +1,4 @@
-package com.google.honeycomb.common.log;
+package com.google.honeycomb.log;
 
 /**
  * Gets the raw log data and delegates it to {@link ILogger}

@@ -1,4 +1,4 @@
-package com.google.honeycomb.common.util;
+package com.google.honeycomb.util;
 
 import android.annotation.SuppressLint;
 

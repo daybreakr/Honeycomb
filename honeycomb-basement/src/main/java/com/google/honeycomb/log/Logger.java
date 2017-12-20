@@ -1,4 +1,4 @@
-package com.google.honeycomb.common.log;
+package com.google.honeycomb.log;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;

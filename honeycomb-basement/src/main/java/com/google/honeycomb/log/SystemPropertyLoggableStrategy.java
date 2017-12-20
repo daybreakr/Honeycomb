@@ -1,7 +1,7 @@
-package com.google.honeycomb.common.log;
+package com.google.honeycomb.log;
 
-import com.google.honeycomb.common.util.Preconditions;
-import com.google.honeycomb.common.util.SystemProperties;
+import com.google.honeycomb.util.Preconditions;
+import com.google.honeycomb.util.SystemProperties;
 
 public class SystemPropertyLoggableStrategy implements ILoggableStrategy {
     private static final String PROPERTY_PREFIX = "log.tag.";

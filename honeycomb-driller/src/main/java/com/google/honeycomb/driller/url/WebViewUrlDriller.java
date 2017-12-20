@@ -16,8 +16,8 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.google.honeycomb.common.log.HLog;
-import com.google.honeycomb.common.util.StringUtils;
+import com.google.honeycomb.log.HLog;
+import com.google.honeycomb.util.StringUtils;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

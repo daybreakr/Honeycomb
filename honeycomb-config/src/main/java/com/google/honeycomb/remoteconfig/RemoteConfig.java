@@ -1,6 +1,6 @@
 package com.google.honeycomb.remoteconfig;
 
-import com.google.honeycomb.common.util.Preconditions;
+import com.google.honeycomb.util.Preconditions;
 
 import java.util.HashMap;
 import java.util.Map;

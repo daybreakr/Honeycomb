@@ -1,6 +1,6 @@
-package com.google.honeycomb.common.log;
+package com.google.honeycomb.log;
 
-import com.google.honeycomb.common.util.Preconditions;
+import com.google.honeycomb.util.Preconditions;
 
 public class UnifiedLogPrinter implements ILogPrinter {
     private final String mTag;

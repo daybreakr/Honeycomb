@@ -1,6 +1,6 @@
 package com.google.honeycomb.remoteconfig.impl;
 
-import com.google.honeycomb.common.util.Preconditions;
+import com.google.honeycomb.util.Preconditions;
 import com.google.honeycomb.remoteconfig.IConfigFetcher;
 import com.google.honeycomb.remoteconfig.impl.IVersionedConfigFetcher.FetchVersionedConfigCallback;
 

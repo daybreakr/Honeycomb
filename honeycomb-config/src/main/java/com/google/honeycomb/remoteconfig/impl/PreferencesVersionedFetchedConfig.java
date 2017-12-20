@@ -3,7 +3,7 @@ package com.google.honeycomb.remoteconfig.impl;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.google.honeycomb.common.util.Preconditions;
+import com.google.honeycomb.util.Preconditions;
 
 import java.util.HashMap;
 import java.util.Map;
