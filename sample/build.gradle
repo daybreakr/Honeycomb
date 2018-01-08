@@ -4,7 +4,7 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
-        applicationId "com.google.honeycomb.demo"
+        applicationId "com.honeycomb.demo"
         minSdkVersion 14
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
