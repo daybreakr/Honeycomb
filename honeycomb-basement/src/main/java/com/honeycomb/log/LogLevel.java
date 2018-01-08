@@ -3,6 +3,9 @@ package com.honeycomb.log;
 import android.util.Log;
 
 public enum LogLevel {
+    // Default log level.
+    NONE(Log.ASSERT), // Lowest level, suppress all logs.
+
     VERBOSE(Log.VERBOSE),
     DEBUG(Log.DEBUG),
     INFO(Log.INFO),
