@@ -1,2 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.honeycomb" />
+    package="com.honeycomb">
+
+    <application>
+        <provider
+            android:name=".provider.HoneycombInitProvider"
+            android:authorities="com.google.honeycomb.honeycombinitprovider"
+            android:exported="false"
+            android:initOrder="100" />
+    </application>
+</manifest>

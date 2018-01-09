@@ -43,6 +43,11 @@ public class HoneycombApp {
         }
     }
 
+    public static HoneycombApp initializeApp(Context context) {
+        // TODO: parse HoneycombOptions
+        return initializeApp(context, new HoneycombOptions());
+    }
+
     public static HoneycombApp initializeApp(Context context, HoneycombOptions options) {
         // instantiate HoneycombApp instance
         synchronized (sLock) {
