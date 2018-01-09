@@ -33,7 +33,7 @@ public class HoneycombApp {
     }
 
     public static HoneycombApp getInstance() {
-        synchronized (sLock) {
+            synchronized (sLock) {
             if (sInstance == null) {
                 throw new IllegalStateException("HoneycombApp is not initialized in this process "
                         + ProcessName.get()
@@ -80,7 +80,7 @@ public class HoneycombApp {
         if (plugins != null) {
             for (String plugin : plugins) {
                 try {
-                    Method method = Class.forName(plugin).getMethod("initialize", argumentClass);
+                    Method method = Class.forName(plugin).getMethod("getInstance", argumentClass);
                     int modifiers = method.getModifiers();
                     if (Modifier.isPublic(modifiers) && Modifier.isStatic(modifiers)) {
                         method.invoke(null, argumentObject);

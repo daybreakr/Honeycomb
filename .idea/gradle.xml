@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$/honeycomb-basement" />
             <option value="$PROJECT_DIR$/honeycomb-common" />
             <option value="$PROJECT_DIR$/honeycomb-config" />
+            <option value="$PROJECT_DIR$/honeycomb-crash" />
             <option value="$PROJECT_DIR$/honeycomb-driller" />
             <option value="$PROJECT_DIR$/sample" />
           </set>
