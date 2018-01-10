@@ -4,7 +4,7 @@
     <application>
         <provider
             android:name=".provider.HoneycombInitProvider"
-            android:authorities="com.google.honeycomb.honeycombinitprovider"
+            android:authorities="${applicationId}.google.honeycombinitprovider"
             android:exported="false"
             android:initOrder="100" />
     </application>

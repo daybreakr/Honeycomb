@@ -1,4 +1,4 @@
-package com.honeycomb.demo;
+package com.honeycomb.sample;
 
 import org.junit.Test;
 

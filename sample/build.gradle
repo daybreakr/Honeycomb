@@ -1,14 +1,35 @@
+//==================================================================================================
+// Project(Module)
+//==================================================================================================
+def projectApplicationId = 'com.honeycomb.sample'
+def projectVersion = '1.0'
+def projectVersionCode = 1
+
+task projectInfo {
+    doLast {
+        println " ===== Android Application ====="
+        println " Sample: "
+        println "   - applicationId: ${projectApplicationId}"
+        println "   - version: ${projectVersion}(${projectVersionCode})"
+        println " ---------------------------"
+        println ""
+    }
+}
+
+//==================================================================================================
+// Android
+//==================================================================================================
 apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
-        applicationId "com.honeycomb.demo"
+        applicationId projectApplicationId
         minSdkVersion 14
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode projectVersionCode
+        versionName projectVersion
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -27,4 +48,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
     implementation "com.android.support:appcompat-v7:${supportLibraryVersion}"
+
+    implementation project(':honeycomb-crash')
 }
