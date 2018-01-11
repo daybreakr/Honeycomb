@@ -50,7 +50,7 @@ public class FileUtils {
     }
 
     public static void bytesToFile(File file, byte[] content) throws IOException {
-        bytesToFile(file.getAbsoluteFile(), content);
+        bytesToFile(file.getAbsolutePath(), content);
     }
 
     /*

@@ -59,6 +59,7 @@ subprojects {
     ext {
         // define version for dependencies
         supportLibraryVersion = '27.0.2'
+        butterKnifeVersion = '8.8.1'
     }
 
     // Common maven groupId for all projects
