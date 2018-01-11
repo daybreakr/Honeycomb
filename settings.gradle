@@ -1,1 +1,1 @@
-include ':sample', ':honeycomb-basement', ':honeycomb-driller', ':honeycomb-config', ':honeycomb-common', ':honeycomb-crash'
+include ':sample', ':honeycomb-basement', ':honeycomb-driller', ':honeycomb-config', ':honeycomb-common', ':honeycomb-crash', ':honeycomb-id'
