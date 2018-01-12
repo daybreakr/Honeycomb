@@ -1,41 +1,57 @@
 package com.honeycomb.driller.referrer;
 
+import com.honeycomb.util.Preconditions;
+
 public class CompositeReferrerDriller implements IReferrerDriller {
     private final IReferrerDriller[] mDrillers;
-    private int mDrillerIndex;
-
-    private int mLastErrorCode;
 
     public CompositeReferrerDriller(IReferrerDriller... drillers) {
-        if (drillers == null || drillers.length < 1) {
-            throw new IllegalArgumentException("Must at least supply one driller.");
-        }
-        mDrillers = drillers;
-
-        mDrillerIndex = -1;
+        mDrillers = Preconditions.checkArrayNotEmpty(drillers, true);
     }
 
     @Override
     public void drillReferrer(String packageName, String clickUrl,
                               final DrillReferrerCallback callback) {
-        mDrillerIndex++;
-        if (mDrillerIndex < mDrillers.length) {
-            IReferrerDriller driller = mDrillers[mDrillerIndex];
-            driller.drillReferrer(packageName, clickUrl, new DrillReferrerCallback() {
-                @Override
-                public void onDrillFinished(String packageName, String clickUrl,
-                                            String referrer) {
-                    callback.onDrillFinished(packageName, clickUrl, referrer);
-                }
+        doDrill(packageName, clickUrl, callback, 0);
+    }
 
-                @Override
-                public void onDrillFailed(String packageName, String clickUrl, int errorCode) {
-                    mLastErrorCode = errorCode;
-                    drillReferrer(packageName, clickUrl, callback);
+    private void doDrill(String packageName, String clickUrl, final DrillReferrerCallback callback,
+                         final int drillerIndex) {
+        if (drillerIndex < 0 || drillerIndex >= mDrillers.length) {
+            invokeFail(packageName, clickUrl, ERROR_UNKNOWN, callback);
+            return;
+        }
+
+        IReferrerDriller driller = mDrillers[drillerIndex];
+        driller.drillReferrer(packageName, clickUrl, new DrillReferrerCallback() {
+            @Override
+            public void onDrillFinished(String packageName, String clickUrl, String referrer) {
+                invokeSuccess(packageName, clickUrl, referrer, callback);
+            }
+
+            @Override
+            public void onDrillFailed(String packageName, String clickUrl, int errorCode) {
+                int nextDrillerIndex = drillerIndex + 1;
+                if (nextDrillerIndex < mDrillers.length) {
+                    doDrill(packageName, clickUrl, callback, nextDrillerIndex);
+                } else {
+                    invokeFail(packageName, clickUrl, errorCode, callback);
                 }
-            });
-        } else {
-            callback.onDrillFailed(packageName, clickUrl, mLastErrorCode);
+            }
+        });
+    }
+
+    private static void invokeSuccess(String packageName, String clickUrl, String referrer,
+                               DrillReferrerCallback callback) {
+        if (callback != null) {
+            callback.onDrillFinished(packageName, clickUrl, referrer);
+        }
+    }
+
+    private static void invokeFail(String packageName, String clickUrl, int errorCode,
+                            DrillReferrerCallback callback) {
+        if (callback != null) {
+            callback.onDrillFailed(packageName, clickUrl, errorCode);
         }
     }
 }

@@ -23,6 +23,21 @@ public class Preconditions {
         return reference;
     }
 
+    public static <T> T[] checkArrayNotEmpty(final T[] array, boolean checkElements) {
+        if (array == null || array.length <= 0) {
+            throw new NullPointerException();
+        }
+        if (checkElements) {
+            for (int i = 0; i < array.length; i++) {
+                T element = array[i];
+                if (element == null) {
+                    throw new NullPointerException(i + " element in this array is null.");
+                }
+            }
+        }
+        return array;
+    }
+
     public static <T extends String> T checkStringNotEmpty(final T string) {
         if (StringUtils.isEmpty(string)) {
             throw new IllegalArgumentException();
