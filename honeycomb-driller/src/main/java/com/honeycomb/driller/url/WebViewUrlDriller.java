@@ -223,9 +223,9 @@ public class WebViewUrlDriller extends BaseUrlDriller {
 
             String url = mDrillWebViewClient != null ? mDrillWebViewClient.getDrillingUrl() : null;
             if (StringUtils.isEmpty(url)) {
-                invokeDrillFinish(url, null);
-            } else {
                 invokeFail(url, new Exception("url is null"));
+            } else {
+                invokeDrillFinish(url, null);
             }
         }
     };

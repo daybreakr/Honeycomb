@@ -61,7 +61,7 @@ public class UrlDrillerTest {
     public void testWebViewUrlDriller() {
         HLog.setUnifiedLogger(TAG, false);
 
-        final AsyncResult result = new AsyncResult();
+        final AsyncResult<Void> result = new AsyncResult<>();
 
         Context context = InstrumentationRegistry.getTargetContext();
         WebViewUrlDriller driller = new WebViewUrlDriller(context);
@@ -88,5 +88,9 @@ public class UrlDrillerTest {
         driller.drill(LANDING_PAGE);
 
         result.await();
+
+        if (!result.isSuccessful()) {
+            fail(result.getErrorString());
+        }
     }
 }
