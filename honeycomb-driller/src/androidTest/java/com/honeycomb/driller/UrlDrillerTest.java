@@ -4,11 +4,11 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.honeycomb.log.HLog;
 import com.honeycomb.base.AsyncResult;
 import com.honeycomb.driller.url.HttpUrlDriller;
 import com.honeycomb.driller.url.IUrlDriller;
 import com.honeycomb.driller.url.WebViewUrlDriller;
+import com.honeycomb.log.HLog;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -78,6 +78,47 @@ public class UrlDrillerTest {
             @Override
             public void onDrillerFinish(String url, String responseString) {
                 result.success();
+            }
+
+            @Override
+            public void onDrillerFail(String url, Exception exception) {
+                result.fail(exception.getMessage());
+            }
+        });
+        driller.drill(LANDING_PAGE);
+
+        result.await();
+
+        if (!result.isSuccessful()) {
+            fail(result.getErrorString());
+        }
+    }
+
+    @Test
+    public void testWebViewUrlDriller_LoadSource() {
+        HLog.setUnifiedLogger(TAG, false);
+
+        final AsyncResult<Void> result = new AsyncResult<>();
+
+        Context context = InstrumentationRegistry.getTargetContext();
+        WebViewUrlDriller driller = new WebViewUrlDriller(context);
+        driller.setRetrieveResponseString(true);
+        driller.setListener(new IUrlDriller.Listener() {
+            @Override
+            public void onDrillerStart(String url) {
+            }
+
+            @Override
+            public void onDrillerRedirect(String url) {
+            }
+
+            @Override
+            public void onDrillerFinish(String url, String responseString) {
+                if (responseString == null) {
+                    result.fail("Response is null.");
+                } else {
+                    result.success();
+                }
             }
 
             @Override

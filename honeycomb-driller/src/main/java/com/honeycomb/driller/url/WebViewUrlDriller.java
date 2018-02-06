@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -28,6 +29,8 @@ public class WebViewUrlDriller extends BaseUrlDriller {
     private static final int REDIRECTING_TIMEOUT = 30000; // 30 seconds
     // Wait for a moment when page loading finished because of the refresh delay.
     private static final int DRILL_FINISHED_DELAY = 10000; // 10 seconds
+
+    private static final int LOAD_SOURCE_TIMEOUT = 10000; // 10 seconds
 
     private Context mContext;
 
@@ -114,7 +117,7 @@ public class WebViewUrlDriller extends BaseUrlDriller {
     private void doDrill(String url) {
         // Initialize web view and web view client if needed.
         if (mDrillWebView == null) {
-            mDrillWebView = new DrillWebView(mContext);
+            mDrillWebView = new DrillWebView(mContext, new LoadSourceCallback());
             // XXX: set user agent
         }
         if (mDrillWebViewClient == null) {
@@ -207,48 +210,116 @@ public class WebViewUrlDriller extends BaseUrlDriller {
         public void run() {
             HLog.v(TAG, " - Timeout");
 
-            stop();
-
-            String url = mDrillWebViewClient != null ? mDrillWebViewClient.getDrillingUrl() : null;
-            invokeFail(url, new Exception("timeout loading " + url));
+            onFailed("Timeout");
         }
     };
 
     private Runnable mOnFinished = new Runnable() {
         @Override
         public void run() {
-            HLog.v(TAG, " - Done");
+            if (isRetrieveResponseString()) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mDrillWebView.loadSource();
 
-            stop();
-
-            String url = mDrillWebViewClient != null ? mDrillWebViewClient.getDrillingUrl() : null;
-            if (StringUtils.isEmpty(url)) {
-                invokeFail(url, new Exception("url is null"));
+                        scheduleTimeout(LOAD_SOURCE_TIMEOUT);
+                    }
+                });
             } else {
-                invokeDrillFinish(url, null);
+                onFinished(null);
             }
         }
     };
 
-    private static void runOnUiThread(Runnable runnable) {
-        new Handler(Looper.getMainLooper()).post(runnable);
+    public class LoadSourceCallback {
+
+        @JavascriptInterface
+        public void onSourceLoaded(String source) {
+            removeAllCallbacks();
+
+            onFinished(source);
+        }
+
+        void onLoadSourceNotSupport() {
+            onFailed("Load source not support.");
+        }
+    }
+
+    private void onFinished(String responseString) {
+        if (isRetrieveResponseString()) {
+            HLog.v(TAG, " - Done. response length: " + StringUtils.emptyIfNull(responseString).length());
+        } else {
+            HLog.v(TAG, " - Done.");
+        }
+
+        stop();
+
+        String url = mDrillWebViewClient != null ? mDrillWebViewClient.getDrillingUrl() : null;
+        if (StringUtils.isEmpty(url)) {
+            invokeFail(url, new Exception("final URL is null on finished."));
+        } else {
+            invokeDrillFinish(url, responseString);
+        }
+    }
+
+    private void onFailed(String errorMsg) {
+        HLog.v(TAG, "onFailed. " + errorMsg);
+
+        stop();
+
+        String url = mDrillWebViewClient != null ? mDrillWebViewClient.getDrillingUrl() : null;
+        invokeFail(url, new Exception(errorMsg));
     }
 
     private static class DrillWebView extends WebView {
+        private static final String LOAD_SOURCE_CALLBACK_OBJECT_NAME = "loadSource";
+        private static final String LOAD_SOURCE_CALLBACK_METHOD = "onSourceLoaded";
+
         private static boolean sIsShadowWebViewOpened = false;
         private boolean mIsDestroyed = false;
 
-        public DrillWebView(Context context) {
+        private LoadSourceCallback mLoadSourceCallback;
+
+        public DrillWebView(Context context, LoadSourceCallback loadSourceCallback) {
             super(context.getApplicationContext());
+            mLoadSourceCallback = loadSourceCallback;
 
             setPluginState(false);
             setupAccessibility();
             setupJavascript();
+            addLoadSourceCallback();
 
             if (!sIsShadowWebViewOpened) {
                 showShadowWebView(context);
                 sIsShadowWebViewOpened = true;
             }
+        }
+
+        public boolean canLoadSource() {
+            return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1;
+        }
+
+        public void loadSource() {
+            if (mLoadSourceCallback == null) {
+                HLog.e(TAG, "Must supply LoadSourceCallback.");
+                return;
+            }
+            if (!canLoadSource()) {
+                mLoadSourceCallback.onLoadSourceNotSupport();
+                return;
+            }
+
+            // Make sure LoadSourceCallback object been added in the final page.
+            addLoadSourceCallback();
+
+            String jsLoadSource = "'<html>' + document.getElementsByTagName('html')[0].innerHTML + '</html>'";
+            String jsFormat = "javascript:window.%s.%s(%s);";
+
+            String script = String.format(jsFormat, LOAD_SOURCE_CALLBACK_OBJECT_NAME,
+                    LOAD_SOURCE_CALLBACK_METHOD, jsLoadSource);
+            HLog.v(TAG, " - Script: " + script);
+            loadUrl(script);
         }
 
         @Override
@@ -275,6 +346,13 @@ public class WebViewUrlDriller extends BaseUrlDriller {
         private void setupJavascript() {
             getSettings().setJavaScriptEnabled(true);
             getSettings().setDomStorageEnabled(true);
+        }
+
+        @SuppressLint("AddJavascriptInterface")
+        private void addLoadSourceCallback() {
+            if (mLoadSourceCallback != null && canLoadSource()) {
+                addJavascriptInterface(mLoadSourceCallback, LOAD_SOURCE_CALLBACK_OBJECT_NAME);
+            }
         }
 
         private void setupAccessibility() {
@@ -334,5 +412,9 @@ public class WebViewUrlDriller extends BaseUrlDriller {
         TimeoutThread() {
             super("TimeoutThread-" + serialNumber());
         }
+    }
+
+    private static void runOnUiThread(Runnable runnable) {
+        new Handler(Looper.getMainLooper()).post(runnable);
     }
 }
