@@ -102,7 +102,7 @@ public class UrlDrillerTest {
 
         Context context = InstrumentationRegistry.getTargetContext();
         WebViewUrlDriller driller = new WebViewUrlDriller(context);
-        driller.setRetrieveResponseString(true);
+        driller.setLoadSource(true);
         driller.setListener(new IUrlDriller.Listener() {
             @Override
             public void onDrillerStart(String url) {

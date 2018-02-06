@@ -117,7 +117,11 @@ public class WebViewUrlDriller extends BaseUrlDriller {
     private void doDrill(String url) {
         // Initialize web view and web view client if needed.
         if (mDrillWebView == null) {
-            mDrillWebView = new DrillWebView(mContext, new LoadSourceCallback());
+            LoadSourceCallback loadSourceCallback = null;
+            if (isLoadSource()) {
+                loadSourceCallback = new LoadSourceCallback();
+            }
+            mDrillWebView = new DrillWebView(mContext, loadSourceCallback);
             // XXX: set user agent
         }
         if (mDrillWebViewClient == null) {
@@ -155,7 +159,7 @@ public class WebViewUrlDriller extends BaseUrlDriller {
             if (isStopped()) {
                 return;
             }
-            HLog.v(TAG, " - Finished: " + url);
+            HLog.v(TAG, " - Page Finished: " + url);
 
             scheduleOnFinish(DRILL_FINISHED_DELAY);
         }
@@ -217,7 +221,7 @@ public class WebViewUrlDriller extends BaseUrlDriller {
     private Runnable mOnFinished = new Runnable() {
         @Override
         public void run() {
-            if (isRetrieveResponseString()) {
+            if (isLoadSource()) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -242,13 +246,15 @@ public class WebViewUrlDriller extends BaseUrlDriller {
         }
 
         void onLoadSourceNotSupport() {
+            removeAllCallbacks();
+
             onFailed("Load source not support.");
         }
     }
 
     private void onFinished(String responseString) {
-        if (isRetrieveResponseString()) {
-            HLog.v(TAG, " - Done. response length: " + StringUtils.emptyIfNull(responseString).length());
+        if (isLoadSource()) {
+            HLog.v(TAG, " - Done. source length: " + StringUtils.emptyIfNull(responseString).length());
         } else {
             HLog.v(TAG, " - Done.");
         }

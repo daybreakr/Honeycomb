@@ -63,6 +63,13 @@ public interface IUrlDriller {
     void setRetrieveResponseString(boolean retrieveResponseString);
 
     /**
+     * Set whether load the page source or not while drill finished.
+     *
+     * @param loadSource whether load source or not.
+     */
+    void setLoadSource(boolean loadSource);
+
+    /**
      * Start drilling from target URL
      *
      * @param url target URL used to drill with.

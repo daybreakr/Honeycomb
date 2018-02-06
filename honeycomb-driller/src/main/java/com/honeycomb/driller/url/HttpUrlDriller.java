@@ -142,7 +142,8 @@ public class HttpUrlDriller extends BaseUrlDriller {
         }
 
         String responseString = null;
-        if (isRetrieveResponseString()) {
+        // Load source means retrieve response string in HttpUrlDriller.
+        if (isRetrieveResponseString() || isLoadSource()) {
             responseString = retrieveResponseString(connection);
         }
         invokeDrillFinish(url, responseString);

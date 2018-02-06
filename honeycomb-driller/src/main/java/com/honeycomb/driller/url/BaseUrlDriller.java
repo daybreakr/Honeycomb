@@ -7,6 +7,7 @@ public abstract class BaseUrlDriller implements IUrlDriller {
     private String mUserAgent = null;
     private int mDrillDepth = 0;
     private boolean mRetrieveResponseString = false;
+    private boolean mLoadSource = false;
 
     private String mDrillingUrl;
 
@@ -31,6 +32,11 @@ public abstract class BaseUrlDriller implements IUrlDriller {
     @Override
     public void setRetrieveResponseString(boolean retrieveResponseString) {
         mRetrieveResponseString = retrieveResponseString;
+    }
+
+    @Override
+    public void setLoadSource(boolean loadSource) {
+        mLoadSource = loadSource;
     }
 
     @Override
@@ -91,6 +97,10 @@ public abstract class BaseUrlDriller implements IUrlDriller {
 
     protected boolean isRetrieveResponseString() {
         return mRetrieveResponseString;
+    }
+
+    protected boolean isLoadSource() {
+        return mLoadSource;
     }
 
     protected abstract void onStartDrill(String url);
