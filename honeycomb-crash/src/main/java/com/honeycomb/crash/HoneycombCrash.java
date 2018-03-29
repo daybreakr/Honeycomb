@@ -1,6 +1,9 @@
 package com.honeycomb.crash;
 
-import com.honeycomb.HoneycombApp;
+import com.honeycomb.common.HoneycombApp;
+import com.honeycomb.crash.impl.LogCrashHandler;
+import com.honeycomb.crash.impl.RebootCrashHandler;
+import com.honeycomb.crash.impl.ToastCrashHandler;
 import com.honeycomb.log.HLog;
 import com.honeycomb.util.Preconditions;
 

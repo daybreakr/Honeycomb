@@ -1,15 +1,11 @@
 //==================================================================================================
 // Project(Module)
 //==================================================================================================
-def projectGroupId = project.group
-def projectArtifactId = project.name
-def projectVersion = project.version
-
 task projectInfo {
     doLast {
         println " ===== Android Library ====="
-        println " ${projectArtifactId}: "
-        println "   - maven: ${projectGroupId}:${projectArtifactId}:${projectVersion}"
+        println " ${project.name}: "
+        println "   - maven: ${project.group}:${project.name}:${project.version}"
         println " ---------------------------"
         println ""
     }
@@ -21,13 +17,13 @@ task projectInfo {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
+    compileSdkVersion compileSdk
 
     defaultConfig {
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName projectVersion
+        minSdkVersion minSdk
+        targetSdkVersion targetSdk
+        versionCode projectVersionCode
+        versionName project.version
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -41,6 +37,9 @@ android {
 }
 
 dependencies {
+    //==============================================================================================
+    // Test
+    //==============================================================================================
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
@@ -57,10 +56,10 @@ task sourcesJar(type: Jar) {
 
 publishing {
     publications {
-        aar(MavenPublication) {
-            groupId projectGroupId
-            artifactId projectArtifactId
-            version projectVersion
+        honeycombBasement(MavenPublication) {
+            groupId project.group
+            artifactId project.name
+            version project.version
 
             // source code
             artifact sourcesJar {
@@ -69,7 +68,7 @@ publishing {
 
             // release aar
             android.libraryVariants.all { variant ->
-                if (variant.buildType.name == "debug") {
+                if (variant.buildType.name != 'release') {
                     return
                 }
                 artifact variant.packageLibrary // This is the aar library

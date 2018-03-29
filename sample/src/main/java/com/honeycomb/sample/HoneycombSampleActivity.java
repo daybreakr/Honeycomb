@@ -6,8 +6,6 @@ import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
-import com.honeycomb.id.HoneycombId;
-
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -32,34 +30,14 @@ public class HoneycombSampleActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        refreshDeviceId();
     }
 
     //==============================================================================================
     // Presenter
     //==============================================================================================
 
-    private void refreshDeviceId() {
-        mExecutor.submit(new Runnable() {
-            @Override
-            public void run() {
-                String deviceId = HoneycombId.getInstance().getDeviceId();
-
-                updateDeviceId(deviceId);
-            }
-        });
-    }
-
     //==============================================================================================
     // View
     //==============================================================================================
 
-    private void updateDeviceId(final String deviceId) {
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mDeviceId.setText(deviceId);
-            }
-        });
-    }
 }

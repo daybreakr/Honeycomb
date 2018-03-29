@@ -5,6 +5,7 @@ public interface IReferrerDriller {
     int ERROR_PACKAGE_MISMATCH = 1;
     int ERROR_NO_REFERRER = 2;
     int ERROR_REDIRECT_ERROR = 3;
+    int ERROR_CREATING_URL_DRILLER = 4;
 
     interface DrillReferrerCallback {
 

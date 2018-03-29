@@ -2,15 +2,13 @@
 // Project(Module)
 //==================================================================================================
 def projectApplicationId = 'com.honeycomb.sample'
-def projectVersion = '1.0'
-def projectVersionCode = 1
 
 task projectInfo {
     doLast {
         println " ===== Android Application ====="
-        println " Sample: "
+        println " ${project.name}: "
         println "   - applicationId: ${projectApplicationId}"
-        println "   - version: ${projectVersion}(${projectVersionCode})"
+        println "   - version: ${project.version}(${projectVersionCode})"
         println " ---------------------------"
         println ""
     }
@@ -22,14 +20,14 @@ task projectInfo {
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
+    compileSdkVersion compileSdk
 
     defaultConfig {
         applicationId projectApplicationId
         minSdkVersion 14
-        targetSdkVersion rootProject.ext.targetSdkVersion
+        targetSdkVersion targetSdk
         versionCode projectVersionCode
-        versionName projectVersion
+        versionName project.version
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -43,16 +41,21 @@ android {
 }
 
 dependencies {
+    //==============================================================================================
+    // Test
+    //==============================================================================================
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+    //==============================================================================================
+    // Common
+    //==============================================================================================
+    implementation project(':honeycomb-crash')
 
     implementation "com.android.support:appcompat-v7:${supportLibraryVersion}"
 
     /* Butter Knife */
     implementation "com.jakewharton:butterknife:${butterKnifeVersion}"
     annotationProcessor "com.jakewharton:butterknife-compiler:${butterKnifeVersion}"
-
-    implementation project(':honeycomb-crash')
-    implementation project(':honeycomb-id')
 }

@@ -1,27 +1,30 @@
 package com.honeycomb.log;
 
+import com.honeycomb.log.impl.LogAdapter;
+import com.honeycomb.log.impl.LogcatLogPrinter;
+import com.honeycomb.log.impl.Logger;
+import com.honeycomb.log.impl.SimpleLoggable;
+import com.honeycomb.log.impl.SystemPropertyLoggable;
+import com.honeycomb.log.impl.UnifiedLogPrinter;
+
 /**
  * Gets the raw log data and delegates it to {@link ILogger}
  */
 public class HLog {
-    private static ILogger sLogger = new DefaultLogger();
+    private static ILogger sLogger = createDefaultLogger();
 
     private HLog() {
         // no instance
+    }
+
+    public static void setUnifiedLogger(String tag, boolean allLoggable) {
+        setLogger(createUnifiedLogger(tag, allLoggable));
     }
 
     public static void setLogger(ILogger logger) {
         if (logger != null) {
             sLogger = logger;
         }
-    }
-
-    public static void setUnifiedLogger(String tag, boolean production) {
-        LogAdapter.Builder builder = LogAdapter.buildUpon()
-                .logPrinter(new UnifiedLogPrinter(tag, new LogcatLogPrinter()))
-                .addLoggableStrategy(new SimpleLoggableStrategy(!production))
-                .addLoggableStrategy(new SystemPropertyLoggableStrategy(tag));
-        setLogAdapter(builder.build());
     }
 
     public static void setLogAdapter(ILogAdapter logAdapter) {
@@ -85,11 +88,27 @@ public class HLog {
         sLogger.log(level, tag, message, throwable);
     }
 
-    private static class DefaultLogger extends Logger {
+    private static ILogger createDefaultLogger() {
+        ILogger logger = new Logger();
 
-        DefaultLogger() {
-            // All use defaults.
-            addLogAdapter(LogAdapter.buildUpon().build());
-        }
+        ILogAdapter logAdapter = LogAdapter.buildUpon().build();
+
+        logger.addLogAdapter(logAdapter);
+
+        return logger;
+    }
+
+    private static ILogger createUnifiedLogger(String tag, boolean allLoggable) {
+        ILogger logger = new Logger();
+
+        ILogAdapter logAdapter = LogAdapter.buildUpon()
+                .addLoggable(new SimpleLoggable(allLoggable))
+                .addLoggable(new SystemPropertyLoggable(tag))
+                .logPrinter(new UnifiedLogPrinter(tag, new LogcatLogPrinter()))
+                .build();
+
+        logger.addLogAdapter(logAdapter);
+
+        return logger;
     }
 }

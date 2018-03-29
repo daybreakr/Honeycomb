@@ -21,7 +21,7 @@ public class HoneycombCrashOptions {
         return mIsSuppressCrashed;
     }
 
-    public boolean needRebootOnCrash() {
+    public boolean isRebootOnCrash() {
         return mRebootOnCrash;
     }
 
