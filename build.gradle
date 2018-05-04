@@ -44,25 +44,32 @@ allprojects {
 //==================================================================================================
 //region // Common properties
 
-def versionName = getVersionName()
-def versionCode = getVersionCode()
+version = getVersionName()
+
+ext {
+    versionCode = getVersionCode()
+}
 
 subprojects {
     // Common maven groupId for all projects
     group 'com.honeycomb'
 
     // Common maven version for all projects
-    version versionName
+    version rootProject.version
 
     ext {
-        minSdk = 10
-        targetSdk = 27
-        compileSdk = 27
+        applicationId = project.name
+        versionCode = rootProject.versionCode
 
-        projectVersionCode = versionCode
+        sdkVersion = 27
+        minSdkVersion = 10
 
         // define version for dependencies
-        supportLibraryVersion = '27.1.0'
+        junitVersion = '4.12'
+        androidTestVersion = '1.0.1'
+        espressoVersion = '3.0.1'
+        supportLibraryVersion = '27.1.1'
+        constraintLayoutVersion = '1.1.0'
         butterKnifeVersion = '8.8.1'
     }
 }
@@ -75,12 +82,11 @@ task clean(type: Delete) {
 }
 
 task projectInfo {
-    doLast {
-        println " ==========================="
-        println " ${project.name}"
-        println " version: ${versionName}(${versionCode})"
-        println " ---------------------------"
-    }
+    println " ===== Android Root Project ====="
+    println " ${rootProject.name}: "
+    println "   - version: ${rootProject.version}"
+    println "   - versionCode: ${rootProject.versionCode}"
+    println " ---------------------------"
 }
 
 private static def getVersionName() {

@@ -17,12 +17,12 @@ task projectInfo {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion compileSdk
+    compileSdkVersion project.sdkVersion
 
     defaultConfig {
-        minSdkVersion minSdk
-        targetSdkVersion targetSdk
-        versionCode projectVersionCode
+        minSdkVersion project.minSdkVersion
+        targetSdkVersion project.sdkVersion
+        versionCode project.versionCode
         versionName project.version
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -40,9 +40,9 @@ dependencies {
     //==============================================================================================
     // Test
     //==============================================================================================
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    testImplementation "junit:junit:$junitVersion"
+    androidTestImplementation "com.android.support.test:runner:$androidTestVersion"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$espressoVersion"
 
     //==============================================================================================
     // Common
