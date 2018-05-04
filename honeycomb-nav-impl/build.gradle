@@ -48,10 +48,6 @@ dependencies {
     // Common
     //==============================================================================================
     implementation project(':honeycomb-nav')
-
-    // Android support
-    implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
-    implementation "com.android.support:design:$supportLibraryVersion"
 }
 
 //==================================================================================================
