@@ -43,11 +43,6 @@ dependencies {
     testImplementation "junit:junit:$junitVersion"
     androidTestImplementation "com.android.support.test:runner:$androidTestVersion"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$espressoVersion"
-
-    //==============================================================================================
-    // Common
-    //==============================================================================================
-    implementation project(':honeycomb-basement')
 }
 
 //==================================================================================================
