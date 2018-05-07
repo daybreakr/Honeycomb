@@ -45,6 +45,9 @@ public class ManifestNavCategoryLoader implements INavCategoryLoader {
                     category = getNavCategoryForMetaData(item.category);
                 }
                 if (category == null) {
+                    category = getDefaultNavCategory(item.category);
+                }
+                if (category == null) {
                     throw new IllegalArgumentException("Couldn't find category " + item.category);
                 }
 
@@ -114,6 +117,17 @@ public class ManifestNavCategoryLoader implements INavCategoryLoader {
             category.order = 0;
             category.title = MetaDataUtils.getString(metaData, mContext.getResources(),
                     category.key, null);
+
+            return category;
+        }
+        return null;
+    }
+
+    private NavCategory getDefaultNavCategory(String categoryKey) {
+        if (!TextUtils.isEmpty(categoryKey)) {
+            NavCategory category = new NavCategory();
+            category.key = categoryKey;
+            category.order = 0;
 
             return category;
         }
