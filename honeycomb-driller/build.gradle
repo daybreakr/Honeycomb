@@ -17,17 +17,14 @@ task projectInfo {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion project.sdkVersion
+    compileSdkVersion versions.compileSdk
 
     defaultConfig {
-        minSdkVersion project.minSdkVersion
-        targetSdkVersion project.sdkVersion
-        versionCode project.versionCode
-        versionName project.version
+        minSdkVersion versions.minSdk
+
+        testInstrumentationRunner runners.androidJUnitRunner
 
         consumerProguardFiles 'proguard-rules.pro'
-
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -36,15 +33,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    libraryVariants.all {
+        it.generateBuildConfig.enabled false
+    }
 }
 
 dependencies {
     //==============================================================================================
     // Test
     //==============================================================================================
-    testImplementation "junit:junit:$junitVersion"
-    androidTestImplementation "com.android.support.test:runner:$androidTestVersion"
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:$espressoVersion"
+    testImplementation deps.test.junit
+    androidTestImplementation deps.test.androidJunit
 
     //==============================================================================================
     // Common

@@ -1,7 +1,7 @@
 //==================================================================================================
 // Project(Module)
 //==================================================================================================
-project.applicationId = 'com.honeycomb.sample'
+ext.applicationId = 'com.honeycomb.sample'
 
 task projectInfo {
     doLast {
@@ -20,23 +20,16 @@ task projectInfo {
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion project.sdkVersion
+    compileSdkVersion versions.compileSdk
 
     defaultConfig {
         applicationId project.applicationId
         minSdkVersion 14
-        targetSdkVersion project.sdkVersion
+        targetSdkVersion versions.targetSdk
         versionCode project.versionCode
         versionName project.version
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
+        testInstrumentationRunner runners.androidJUnitRunner
     }
 }
 
@@ -44,18 +37,15 @@ dependencies {
     //==============================================================================================
     // Test
     //==============================================================================================
-    testImplementation "junit:junit:$junitVersion"
-    androidTestImplementation "com.android.support.test:runner:$androidTestVersion"
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:$espressoVersion"
+    testImplementation deps.test.junit
+    androidTestImplementation deps.test.androidJunit
 
     //==============================================================================================
     // Common
     //==============================================================================================
     implementation project(':honeycomb-crash')
 
-    implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
-
-    /* Butter Knife */
-    implementation "com.jakewharton:butterknife:$butterKnifeVersion"
-    annotationProcessor "com.jakewharton:butterknife-compiler:$butterKnifeVersion"
+    implementation deps.support.appcompat
+    implementation deps.butterKnife
+    annotationProcessor deps.butterKnifeCompiler
 }
