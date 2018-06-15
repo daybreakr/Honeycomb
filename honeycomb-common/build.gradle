@@ -40,7 +40,7 @@ dependencies {
     //==============================================================================================
     // Common
     //==============================================================================================
-    implementation project(':honeycomb-basement')
+    api project(':honeycomb-basement')
 }
 
 //==================================================================================================
@@ -76,8 +76,8 @@ publishing {
             pom.withXml {
                 def dependenciesNode = asNode().appendNode('dependencies')
 
-                // include all 'implementation' dependencies
-                configurations.implementation.allDependencies.each {
+                // include all 'api' dependencies
+                configurations.api.allDependencies.each {
                     def dependencyNode = dependenciesNode.appendNode('dependency')
                     dependencyNode.appendNode('groupId', it.group)
                     dependencyNode.appendNode('artifactId', it.name)

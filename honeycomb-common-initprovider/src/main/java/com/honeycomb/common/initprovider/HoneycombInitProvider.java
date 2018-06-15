@@ -1,4 +1,4 @@
-package com.honeycomb.common.provider;
+package com.honeycomb.common.initprovider;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
