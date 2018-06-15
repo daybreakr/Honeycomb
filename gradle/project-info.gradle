@@ -1,0 +1,37 @@
+def printApplicationInfo(Project project) {
+    println ""
+    println " ===== Android Application ====="
+    println " ${project.name}"
+    println ""
+    println "   - applicationId: ${project.applicationId}"
+    println "   - version: ${project.version} (${project.versionCode})"
+    println " -------------------------------"
+    println ""
+}
+
+def printLibraryInfo(Project project) {
+    println ""
+    println " ===== Android Library ====="
+    println " ${project.name}"
+    println ""
+    println "   - maven: "
+    println " ${project.group}:${project.name}:${project.version}"
+    println "----------------------------"
+    println ""
+}
+
+afterEvaluate { project ->
+    def androidApplication = project.plugins.hasPlugin('com.android.application')
+    def androidLibrary = project.plugins.hasPlugin('com.android.library')
+    if (androidApplication || androidLibrary) {
+        task projectInfo {
+            doLast {
+                if (androidApplication) {
+                    printApplicationInfo project
+                } else {
+                    printLibraryInfo project
+                }
+            }
+        }
+    }
+}

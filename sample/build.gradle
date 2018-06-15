@@ -1,23 +1,6 @@
-//==================================================================================================
-// Project(Module)
-//==================================================================================================
-ext.applicationId = 'com.honeycomb.sample'
-
-task projectInfo {
-    doLast {
-        println " ===== Android Application ====="
-        println " ${project.name}: "
-        println "   - applicationId: ${project.applicationId}"
-        println "   - version: ${project.version}(${project.versionCode})"
-        println " ---------------------------"
-        println ""
-    }
-}
-
-//==================================================================================================
-// Android
-//==================================================================================================
 apply plugin: 'com.android.application'
+
+ext.applicationId = 'com.honeycomb.sample'
 
 android {
     compileSdkVersion versions.compileSdk
@@ -28,25 +11,19 @@ android {
         targetSdkVersion versions.targetSdk
         versionCode project.versionCode
         versionName project.version
-
         testInstrumentationRunner runners.androidJUnitRunner
     }
 }
 
 dependencies {
-    //==============================================================================================
-    // Test
-    //==============================================================================================
-    testImplementation deps.test.junit
-    androidTestImplementation deps.test.androidJunit
-
-    //==============================================================================================
-    // Common
-    //==============================================================================================
     implementation project(':honeycomb-common-initprovider')
     implementation project(':honeycomb-crash')
-
     implementation deps.support.appcompat
     implementation deps.butterKnife
     annotationProcessor deps.butterKnifeCompiler
+
+    testImplementation deps.test.junit
+    androidTestImplementation deps.test.androidJunit
 }
+
+apply from: rootProject.file('gradle/project-info.gradle')
