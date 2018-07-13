@@ -235,7 +235,7 @@ public class FileUtils {
         if (dir == null) {
             throw new IOException("dir is null.");
         }
-        if (dir.mkdirs()) {
+        if (!dir.exists() && !dir.mkdirs()) {
             throw new IOException("Failed to create dir " + dir);
         }
         if (!dir.isDirectory()) {
