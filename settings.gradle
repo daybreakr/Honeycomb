@@ -1,1 +1,13 @@
-include ':sample', ':honeycomb-basement', ':honeycomb-driller', ':honeycomb-config', ':honeycomb-common', ':honeycomb-crash', ':honeycomb-nav', ':honeycomb-nav-impl', ':honeycomb-common-initprovider'
+include ':honeycomb-basement'
+
+include ':honeycomb-common'
+include ':honeycomb-common-initprovider'
+
+include ':honeycomb-config'
+include ':honeycomb-crash'
+include ':honeycomb-driller'
+include ':honeycomb-nav'
+include ':honeycomb-nav-impl'
+include ':honeycomb-invisible'
+
+include ':sample'

@@ -1,0 +1,11 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.honeycomb.invisible">
+
+    <application>
+        <provider
+            android:name=".provider.InvisibleInitProvider"
+            android:authorities="${applicationId}.invisible.initprovider"
+            android:exported="false"
+            android:initOrder="50" />
+    </application>
+</manifest>

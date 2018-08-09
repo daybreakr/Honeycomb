@@ -9,6 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/honeycomb-config/honeycomb-config.iml" filepath="$PROJECT_DIR$/honeycomb-config/honeycomb-config.iml" />
       <module fileurl="file://$PROJECT_DIR$/honeycomb-crash/honeycomb-crash.iml" filepath="$PROJECT_DIR$/honeycomb-crash/honeycomb-crash.iml" />
       <module fileurl="file://$PROJECT_DIR$/honeycomb-driller/honeycomb-driller.iml" filepath="$PROJECT_DIR$/honeycomb-driller/honeycomb-driller.iml" />
+      <module fileurl="file://$PROJECT_DIR$/honeycomb-invisible/honeycomb-invisible.iml" filepath="$PROJECT_DIR$/honeycomb-invisible/honeycomb-invisible.iml" />
       <module fileurl="file://$PROJECT_DIR$/honeycomb-nav/honeycomb-nav.iml" filepath="$PROJECT_DIR$/honeycomb-nav/honeycomb-nav.iml" />
       <module fileurl="file://$PROJECT_DIR$/honeycomb-nav-impl/honeycomb-nav-impl.iml" filepath="$PROJECT_DIR$/honeycomb-nav-impl/honeycomb-nav-impl.iml" />
       <module fileurl="file://$PROJECT_DIR$/sample/sample.iml" filepath="$PROJECT_DIR$/sample/sample.iml" />
