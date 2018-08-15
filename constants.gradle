@@ -1,0 +1,60 @@
+ext {
+    versionName = getVersionName()
+    versionCode = getVersionCode()
+
+    gradleDir = "${rootDir}/gradle"
+
+    gradlePlugins = [
+        android: "com.android.tools.build:gradle:3.1.4",
+
+        projectInfo: "${gradleDir}/project-info.gradle",
+        mavenLocalPublish: "${gradleDir}/maven-local-publish.gradle",
+    ]
+
+    versions = [
+        compileSdk: 27,
+        minSdk: 10,
+        targetSdk: 27,
+
+        supportLibrary: '27.1.1',
+        butterKnife: '8.8.1',
+    ]
+
+    deps = [
+        test: [
+            junit: 'junit:junit:4.12',
+            androidJunit: 'com.android.support.test:runner:1.0.2',
+            espresso: 'com.android.support.test.espresso:espresso-core:3.0.2',
+        ],
+        support: [
+            annotations: "com.android.support:support-annotations:${versions.supportLibrary}",
+            appcompat: "com.android.support:appcompat-v7:${versions.supportLibrary}",
+            cardview: "com.android.support:cardview-v7:${versions.supportLibrary}",
+            recyclerview: "com.android.support:recyclerview-v7:${versions.supportLibrary}",
+            design: "com.android.support:design:${versions.supportLibrary}",
+        ],
+        butterknife: [
+            runtime: "com.jakewharton:butterknife:${versions.butterKnife}",
+            compiler: "com.jakewharton:butterknife-compiler:${versions.butterKnife}",
+        ],
+        javapoet: "com.squareup:javapoet:1.11.1",
+        auto: [
+            service: "com.google.auto.service:auto-service:1.0-rc2",
+        ],
+    ]
+
+    runners = [
+        androidJUnitRunner: 'android.support.test.runner.AndroidJUnitRunner',
+    ]
+}
+
+private static def getVersionName() {
+    def cmd = 'git describe --tags'
+    cmd.execute().text.trim()
+}
+
+private static def getVersionCode() {
+    // Get git commit count as version code.
+    def cmd = 'git rev-list HEAD --count'
+    cmd.execute().text.trim().toInteger()
+}

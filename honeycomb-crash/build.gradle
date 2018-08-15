@@ -5,8 +5,10 @@ android {
 
     defaultConfig {
         minSdkVersion versions.minSdk
-        testInstrumentationRunner runners.androidJUnitRunner
+
         consumerProguardFiles 'proguard-rules.pro'
+
+        testInstrumentationRunner runners.androidJUnitRunner
     }
 
     libraryVariants.all {
@@ -21,5 +23,5 @@ dependencies {
     androidTestImplementation deps.test.androidJunit
 }
 
-apply from: rootProject.file('gradle/project-info.gradle')
-apply from: rootProject.file('gradle/maven-local-publish.gradle')
+apply from: gradlePlugins.projectInfo
+apply from: gradlePlugins.mavenLocalPublish

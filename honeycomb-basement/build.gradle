@@ -5,6 +5,7 @@ android {
 
     defaultConfig {
         minSdkVersion versions.minSdk
+
         testInstrumentationRunner runners.androidJUnitRunner
     }
 
@@ -18,5 +19,5 @@ dependencies {
     androidTestImplementation deps.test.androidJunit
 }
 
-apply from: rootProject.file('gradle/project-info.gradle')
-apply from: rootProject.file('gradle/maven-local-publish.gradle')
+apply from: gradlePlugins.projectInfo
+apply from: gradlePlugins.mavenLocalPublish

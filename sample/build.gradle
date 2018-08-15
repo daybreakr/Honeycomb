@@ -1,6 +1,6 @@
-apply plugin: 'com.android.application'
-
 ext.applicationId = 'com.honeycomb.sample'
+
+apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion versions.compileSdk
@@ -11,6 +11,7 @@ android {
         targetSdkVersion versions.targetSdk
         versionCode project.versionCode
         versionName project.version
+
         testInstrumentationRunner runners.androidJUnitRunner
     }
 }
@@ -19,11 +20,11 @@ dependencies {
     implementation project(':honeycomb-common-initprovider')
     implementation project(':honeycomb-crash')
     implementation deps.support.appcompat
-    implementation deps.butterKnife
-    annotationProcessor deps.butterKnifeCompiler
+    implementation deps.butterknife.runtime
+    annotationProcessor deps.butterknife.compiler
 
     testImplementation deps.test.junit
     androidTestImplementation deps.test.androidJunit
 }
 
-apply from: rootProject.file('gradle/project-info.gradle')
+apply from: gradlePlugins.projectInfo
